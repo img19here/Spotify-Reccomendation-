@@ -7,15 +7,14 @@ import pickle
 
 def download_file(url, filename):
     response = requests.get(url)
-    with open(filename, 'wb') as f:
-        f.write(response.content)
+    if 'text/html' in response.headers.get('Content-Type', ''):
+        print("Error: The file is not a valid pickle file.")
+    else:
+        with open(filename, 'wb') as f:
+            f.write(response.content)
 
-
-file_url = "https://www.dropbox.com/scl/fi/gxffyb41qcs6j888439p3/combined_sim.pkl?rlkey=4oa8wupn59tqaskg5rbhuixx2&st=43s33n10&dl=1"
-
-
+file_url = = "https://www.dropbox.com/scl/fi/gxffyb41qcs6j888439p3/combined_sim.pkl?rlkey=4oa8wupn59tqaskg5rbhuixx2&st=43s33n10&dl=1"
 download_file(file_url, "combined_sim.pkl")
-
 
 with open("combined_sim.pkl", "rb") as f:
     combined_sim = pickle.load(f)
