@@ -11,7 +11,7 @@ def download_file(url, filename):
         f.write(response.content)
 
 
-file_url = "https://www.dropbox.com/scl/fi/gxffyb41qcs6j888439p3/combined_sim.pkl?rlkey=4oa8wupn59tqaskg5rbhuixx2&st=43s33n10&dl=0"
+file_url = "https://www.dropbox.com/scl/fi/gxffyb41qcs6j888439p3/combined_sim.pkl?rlkey=4oa8wupn59tqaskg5rbhuixx2&st=43s33n10&dl=1"
 
 
 download_file(file_url, "combined_sim.pkl")
