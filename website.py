@@ -32,18 +32,33 @@ songs = pd.DataFrame(songs)
 def song_rec(text):
     recommended_songs = []
     track_ids = []
-    
-    index = songs[songs['track_name']== text].index[0]
+
+    # Check if the song is in the songs dataframe
+    if text not in songs['track_name'].values:
+        st.error("Song not found in the dataset.")
+        return recommended_songs, track_ids
+
+    # Get the index of the selected song
+    index = songs[songs['track_name'] == text].index[0]
+
+    # Check if the index is valid in combined_sim
+    if index >= len(combined_sim):
+        st.error(f"Index {index} is out of range for the combined_sim array.")
+        return recommended_songs, track_ids
+
+    # Get distances (similarity scores)
     distance = combined_sim[index]
 
-    recs = sorted(list(enumerate(distance)) , reverse = True , key = lambda x : x[1])[1:11]
-    
+    # Sort the distances and get the top 10 recommendations
+    recs = sorted(list(enumerate(distance)), reverse=True, key=lambda x: x[1])[1:11]
+
+    # Collect the recommended song names and track IDs
     for i in recs:
-        # print(i[0])
-        recommended_songs.append((songs.iloc[i[0]].track_name))
+        recommended_songs.append(songs.iloc[i[0]].track_name)
         track_ids.append(songs.iloc[i[0]].track_id)
-    return recommended_songs,track_ids
-    
+
+    return recommended_songs, track_ids
+
 
 import streamlit as st
 
